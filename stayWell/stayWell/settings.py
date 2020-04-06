@@ -25,7 +25,7 @@ SECRET_KEY = 'g^$-kh@^vg#k#gv-+la-l@7kgonht-nvzi9u(c4x#o_4!-be0-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','stayWell.eba-yaezxbj6.us-west-2.elasticbeanstalk.com']
 
 
 # Application definition
@@ -73,12 +73,28 @@ WSGI_APPLICATION = 'stayWell.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+          'NAME': 'staywell',
+    	  'USER': 'staywell_db_user',
+	  'PASSWORD': '2003173.TRK',
+	  'HOST': 'localhost',
+	  'PORT': '',
+       }
+  }
 
 
 # Password validation
@@ -117,4 +133,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static'
+STATIC_ROOT = 'static'
