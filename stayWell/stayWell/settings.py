@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1','.us-west-1.elasticbeanstalk.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'stayWellCore.apps.StaywellcoreConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

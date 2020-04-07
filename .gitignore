@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Added by Exponent
+.DS_Store
+stayWell/static/
+
 # User-specific files
 *.rsuser
 *.suo
