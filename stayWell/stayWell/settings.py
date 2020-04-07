@@ -25,7 +25,7 @@ SECRET_KEY = 'g^$-kh@^vg#k#gv-+la-l@7kgonht-nvzi9u(c4x#o_4!-be0-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','stayWell.eba-yaezxbj6.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','.us-west-1.elasticbeanstalk.com']
 
 
 # Application definition
