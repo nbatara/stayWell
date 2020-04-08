@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'stayWellCore/style.css' %}">
+
+<body>
+<form action=" " method="post">
+    {% csrf_token %}
+    {% for question in latest_question_list %}
+    <!-- if question.choice_type -->
+        <li></a>{{ question.question_text }}</a></li>
+        {% for choice in question.test %}
+        test
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    {% endfor %}
+    <input type="submit" value="Submit">
+    </form>
+
+</body>

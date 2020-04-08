@@ -1,7 +1,35 @@
 import datetime
-
 from django.db import models
 from django.utils import timezone
+
+class Question(models.Model):
+    NO_SELECTION = None
+    TYPE_1 = 'CharField'
+    TYPE_2 = 'DecimalField'
+    TYPE_CHOICES = [
+        (NO_SELECTION, 'Select Type'),
+        (TYPE_1, 'CharField'),
+        (TYPE_2, 'DecimalField'),
+    ]
+    question_text = models.CharField(max_length=200)
+    choice_type = models.CharField(
+        max_length=200,
+        choices=TYPE_CHOICES,
+        default=TYPE_1
+    )
+    possible_choices = models.TextField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    def __str__(self):
+        return self.question_text
+
+class Choice(models.Model):
+
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    def __str__(self):
+        return self.choice_text 
 
 class JournalEntry(models.Model):
 
@@ -9,9 +37,9 @@ class JournalEntry(models.Model):
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     # User identification information that can be obtained from request.user
-    fNum        = ''
-    firstName   = ''
-    lastName    = ''
+    fNum        = '100'
+    firstName   = 'firstName'
+    lastName    = 'lastName'
     
     # INFORMATION INPUT BY THE USER:
 
