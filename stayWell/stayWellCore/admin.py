@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Question, Choice, JournalEntry
+from .models import Question, QuestionCharField, QuestionDropDownField, SurveyEntry
 # Register your models here.
-admin.site.register(Question)
-admin.site.register(Choice)
-admin.site.register(JournalEntry)
+admin.site.register(QuestionCharField)
+admin.site.register(QuestionDropDownField)
+admin.site.register(SurveyEntry)

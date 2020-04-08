@@ -3,35 +3,52 @@ from django.db import models
 from django.utils import timezone
 
 class Question(models.Model):
-    NO_SELECTION = None
-    TYPE_1 = 'CharField'
-    TYPE_2 = 'DecimalField'
-    TYPE_CHOICES = [
-        (NO_SELECTION, 'Select Type'),
-        (TYPE_1, 'CharField'),
-        (TYPE_2, 'DecimalField'),
-    ]
-    question_text = models.CharField(max_length=200)
-    choice_type = models.CharField(
-        max_length=200,
-        choices=TYPE_CHOICES,
-        default=TYPE_1
-    )
-    possible_choices = models.TextField(max_length=200)
+    question_text = models.CharField(max_length=100)
     pub_date = models.DateTimeField('date published')
+
+    class Meta:
+        abstract = True
+
     def __str__(self):
         return self.question_text
 
-class Choice(models.Model):
+class QuestionCharField(Question):
+    pass
 
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+class QuestionCharTest(Question):
+    pass
+
+class QuestionDropDownField(Question):
+    pass
+
+
+class QuestionDecField(Question):
+    question_text = models.DecimalField(max_digits=5, decimal_places=2)
+
+class QuestionBoolField(Question):
+    question_text = models.BooleanField()
+
+class ChoiceDropDownField(models.Model):
+    question = models.ForeignKey(QuestionDropDownField, on_delete=models.CASCADE)
+    choices = models.TextField(max_length=100)
+# Create Tuple
+    def createChoicesTuple(self):
+        return tuple(str(x) for x in str.splitlines(self.choices))
+
+# Update choices
+    def addChoice(self, choiceToAdd):
+        self.choices = self.choices + '\n' + choiceToAdd
+
+    def __init__(self):
+        choice_text = models.CharField(
+            max_length=100,
+            choices=self.createChoicesTuple(),
+            default=None
+            )
     def __str__(self):
-        return self.choice_text 
+        return self.choice_text
 
-class JournalEntry(models.Model):
+class SurveyEntry(models.Model):
 
     # INFORMATION AUTOMATICALLY OBTAINED:
     timeStamp = models.DateTimeField(auto_now_add=True)
