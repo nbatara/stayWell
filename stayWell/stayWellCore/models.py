@@ -19,17 +19,6 @@ class QuestionCharTest(Question):
     pass
 
 class QuestionDropDownField(Question):
-    pass
-
-
-class QuestionDecField(Question):
-    question_text = models.DecimalField(max_digits=5, decimal_places=2)
-
-class QuestionBoolField(Question):
-    question_text = models.BooleanField()
-
-class ChoiceDropDownField(models.Model):
-    question = models.ForeignKey(QuestionDropDownField, on_delete=models.CASCADE)
     choices = models.TextField(max_length=100)
 # Create Tuple
     def createChoicesTuple(self):
@@ -45,8 +34,19 @@ class ChoiceDropDownField(models.Model):
             choices=self.createChoicesTuple(),
             default=None
             )
-    def __str__(self):
-        return self.choice_text
+
+
+class QuestionDecField(Question):
+    question_text = models.DecimalField(max_digits=5, decimal_places=2)
+
+class QuestionBoolField(Question):
+    question_text = models.BooleanField()
+
+# class ChoiceDropDownField(models.Model):
+#     question = models.ForeignKey(QuestionDropDownField, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.choice_text
 
 class SurveyEntry(models.Model):
 
