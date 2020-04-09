@@ -1,30 +1,39 @@
-<head>
-    <title>stayWell</title>
-    {% load static %}
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript for Materialize CSS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</head>
+{% comment %} {% load static %}
+{% load material_form %}
+<link rel="stylesheet" type="text/css" href="{% static 'stayWellCore/materialize.css' %}">  {% endcomment %}
 
-<!-- {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'stayWellCore/style.css' %}"> -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-<body>
-<form action=" " method="post">
+{% comment %} display userID INFO {% endcomment %}
+<div class="row">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+          <span class="card-title">User</span>
+          <p> </p>
+          <p> {{request.user.get_full_name}}</p>
+          <p> F#: {{request.user.employee.fNumber}}</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% comment %} display first question {% endcomment %}
+<div class="row">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+<form method="post" novalidate>
     {% csrf_token %}
-    {% for question in latest_question_list %}
-    <!-- if question.choice_type -->
-        <li></a>{{ question.question_text }}</a></li>
-        {% for choice in question.test %}
-        test
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
-    {% endfor %}
-    <input type="submit" value="Submit">
-    </form>
-
-</body>
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+  </form>
+        </div>
+      </div>
+    </div>
+</div>
 
 <!-- TODO: Add materialize CSS cards for each -->

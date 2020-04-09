@@ -1,6 +1,15 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import Permission, User
+from django.forms import ModelForm
+from django import forms
+from django.forms.widgets import CheckboxSelectMultiple
+
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    fNumber = models.IntegerField()
 
 class Question(models.Model):
     question_text = models.CharField(max_length=100)
@@ -48,52 +57,90 @@ class QuestionBoolField(Question):
 #     def __str__(self):
 #         return self.choice_text
 
+class WorkLocationChoice(models.Model):
+    choice_text = models.CharField(max_length=100)
+    def __str__(self):
+        return self.choice_text
+
+class SymptomsChoice(models.Model):
+    choice_text = models.CharField(max_length=100)
+    def __str__(self):
+        return self.choice_text
+
 class SurveyEntry(models.Model):
 
     # INFORMATION AUTOMATICALLY OBTAINED:
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     # User identification information that can be obtained from request.user
-    fNum        = '100'
-    firstName   = 'firstName'
-    lastName    = 'lastName'
+    fNum        = Employee.fNumber
+    firstName   = User.first_name
+    lastName    = User.last_name
     
     # INFORMATION INPUT BY THE USER:
 
-    # station is a selectable choice from all registered stations
-    NO_SELECTION = None
-    STATION_1 = 'Station 1'
-    STATION_2 = 'Station 2'
-    STATION_3 = 'Station 3'
-    STATION_N = 'Station N'
-    STATION_CHOICES = [
-        (NO_SELECTION, 'Select Station'),
-        (STATION_1, 'Station 1'),
-        (STATION_2, 'Station 2'),
-        (STATION_3, 'Station 3'),
-        (STATION_N, 'Station N')
-    ]
-    station = models.CharField(
-        max_length=100,
-        choices=STATION_CHOICES,
-        default=NO_SELECTION
-    ) # select from dropdown of registeredStations
+    # # station is a selectable choice from all registered stations
+    # NO_SELECTION = None
+    # STATION_1 = 'Station 1'
+    # STATION_2 = 'Station 2'
+    # STATION_3 = 'Station 3'
+    # STATION_4 = 'Station 4'
+    # STATION_5 = 'Station 5'
+    # STATION_6 = 'Station 6'
+    # STATION_7 = 'Station 7'
+    # STATION_8 = 'Station 8'
+    # STATION_9 = 'Station 9'
+    # STATION_10 = 'Station 10'
+    # STATION_11 = 'Station 11'
+    # STATION_12 = 'Station 12'
+    # STATION_13 = 'Station 13'
+    # STATION_14 = 'Station 14'
+    # FIRE_ADMINISTRATION = 'Fire Administration'
+    # FIR_EOC = 'Fire/EOC'
+    # FIRE_PREVENTION = 'Fire Prevention'
+    # SELF_ISOLATION_QUARANTINE = 'Self isolation/quarantine'
+    # STATION_CHOICES = [
+    #     (NO_SELECTION, 'Select Station'),
+    #     (STATION_1, 'Station 1'),
+    #     (STATION_2, 'Station 2'),
+    #     (STATION_3, 'Station 3'),
+    #     (STATION_4, 'Station 4'),
+    #     (STATION_5, 'Station 5'),
+    #     (STATION_6, 'Station 6'),
+    #     (STATION_7, 'Station 7'),
+    #     (STATION_8, 'Station 8'),
+    #     (STATION_9, 'Station 9'),
+    #     (STATION_10, 'Station 10'),
+    #     (STATION_11, 'Station 11'),
+    #     (STATION_12, 'Station 12'),
+    #     (STATION_13, 'Station 13'),
+    #     (STATION_14, 'Station 14'),
+    #     (FIRE_ADMINISTRATION, 'Fire Administration'),
+    #     (FIR_EOC, 'Fire/EOC'),
+    #     (FIRE_PREVENTION, 'Fire Prevention'),
+    #     (SELF_ISOLATION_QUARANTINE, 'Self isolation/quarantine')
+    # ]
+    # workLocation = models.CharField(
+    #     max_length=100,
+    #     choices=STATION_CHOICES,
+    #     default=NO_SELECTION
+    # ) 
+    
+    # select from dropdown of registeredStations
+
+    workLocation = models.ManyToManyField(WorkLocationChoice)
     
     Temperature = models.DecimalField(max_digits=5, decimal_places=2)
 
-    otherSymptoms = models.CharField(max_length=100)
-    # List that contains all selectable symptons
-    trackedAdditionalSymptoms = [
-        'Symptom 1',
-        'Symptom 2',
-        'Symptom n',
-    ]
+    Symptoms = models.ManyToManyField(SymptomsChoice)
 
+    otherSymptoms=models.CharField(max_length=100)
 
-    
-    
-    
-    temperature = None # enter temperature in °F, could be text-box with entry parsing, or selectable wheel, etc.
-    additionalSymptoms = dict.fromkeys(trackedAdditionalSymptoms, False) # create dictionary of trackedAdditionalSymptoms, initialized to False.
-    otherSymptoms = models.CharField(max_length=200) # entry field for users to input other additional symptoms
+class SurveyEntryForm(forms.ModelForm):
+    workLocation = forms.ModelChoiceField(queryset=WorkLocationChoice.objects.all(),widget=forms.Select,required=True)
+    Symptoms = forms.ModelMultipleChoiceField(queryset=SymptomsChoice.objects.all(),widget=forms.CheckboxSelectMultiple,required=True)
+    class Meta:
+        model = SurveyEntry
+        fields = ['workLocation', 'Temperature', 'Symptoms', 'otherSymptoms']
+
 
