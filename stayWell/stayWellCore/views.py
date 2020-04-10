@@ -17,9 +17,9 @@ class HomeView(generic.ListView):
     template_name = 'stayWellCore/index.html'
     context_object_name = 'latest_question_list'
 
-#     def get_queryset(self):
-#         """ Return the last five published questions. """
-#         return None
+    def get_queryset(self):
+        """ Return the last five published questions. """
+        return None
 
 # def SurveyView(request):
 #     newSurvey=SurveyEntry
