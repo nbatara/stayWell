@@ -110,9 +110,9 @@ class SurveyEntryForm(forms.ModelForm):
         model = SurveyEntry
         fields = ['workLocation', 'Temperature', 'Symptoms', 'otherSymptoms']
         labels = {'workLocation': 'Work Location', 'otherSymptoms': 'Other Symptoms',}
-        widgets = {
-            'workLocation': forms.Select,
-        }
+        # widgets = {
+        #     'workLocation': forms.Select,
+        # }
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
         super(forms.ModelForm, self).__init__(*args, **kwargs)
