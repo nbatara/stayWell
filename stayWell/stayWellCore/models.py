@@ -22,45 +22,45 @@ def update_profile_signal(sender, instance, created, **kwargs):
         Employee.objects.create(user=instance)
     instance.employee.save()
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=100)
-    pub_date = models.DateTimeField('date published')
+# class Question(models.Model):
+#     question_text = models.CharField(max_length=100)
+#     pub_date = models.DateTimeField('date published')
 
-    class Meta:
-        abstract = True
+#     class Meta:
+#         abstract = True
 
-    def __str__(self):
-        return self.question_text
+#     def __str__(self):
+#         return self.question_text
 
-class QuestionCharField(Question):
-    pass
+# class QuestionCharField(Question):
+#     pass
 
-class QuestionCharTest(Question):
-    pass
+# class QuestionCharTest(Question):
+#     pass
 
-class QuestionDropDownField(Question):
-    choices = models.TextField(max_length=100)
-# Create Tuple
-    def createChoicesTuple(self):
-        return tuple(str(x) for x in str.splitlines(self.choices))
+# class QuestionDropDownField(Question):
+#     choices = models.TextField(max_length=100)
+# # Create Tuple
+#     def createChoicesTuple(self):
+#         return tuple(str(x) for x in str.splitlines(self.choices))
 
-# Update choices
-    def addChoice(self, choiceToAdd):
-        self.choices = self.choices + '\n' + choiceToAdd
+# # Update choices
+#     def addChoice(self, choiceToAdd):
+#         self.choices = self.choices + '\n' + choiceToAdd
 
-    def __init__(self):
-        choice_text = models.CharField(
-            max_length=100,
-            choices=self.createChoicesTuple(),
-            default=None
-            )
+#     def __init__(self):
+#         choice_text = models.CharField(
+#             max_length=100,
+#             choices=self.createChoicesTuple(),
+#             default=None
+#             )
 
 
-class QuestionDecField(Question):
-    question_text = models.DecimalField(max_digits=5, decimal_places=2)
+# class QuestionDecField(Question):
+#     question_text = models.DecimalField(max_digits=5, decimal_places=2)
 
-class QuestionBoolField(Question):
-    question_text = models.BooleanField()
+# class QuestionBoolField(Question):
+#     question_text = models.BooleanField()
 
 # class ChoiceDropDownField(models.Model):
 #     question = models.ForeignKey(QuestionDropDownField, on_delete=models.CASCADE)

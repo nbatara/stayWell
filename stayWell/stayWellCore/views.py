@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Employee, Question, SurveyEntry, SurveyEntryForm
+from .models import Employee, SurveyEntry, SurveyEntryForm
 from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -17,9 +17,9 @@ class HomeView(generic.ListView):
     template_name = 'stayWellCore/index.html'
     context_object_name = 'latest_question_list'
 
-    def get_queryset(self):
-        """ Return the last five published questions. """
-        return None
+#     def get_queryset(self):
+#         """ Return the last five published questions. """
+#         return None
 
 # def SurveyView(request):
 #     newSurvey=SurveyEntry
