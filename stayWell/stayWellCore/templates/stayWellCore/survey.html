@@ -47,10 +47,13 @@ $(document).ready(function(){
     <div class="col s12">
       <div class="card teal valign center">
         <div class="card-content white-text">
-          <span class="card-title">User</span>
+          <span class="card-title">Survey Entry</span>
           <p> </p>
-          <p> {{request.user.get_full_name}}</p>
+          <p> User: {{request.user.get_full_name}}</p>
           <p> F#: {{request.user.employee.fNumber}}</p>
+          <div class="card-action">
+            <a href="/">Home</a>
+          </div>
         </div>
       </div>
     </div>
@@ -61,16 +64,21 @@ $(document).ready(function(){
     <div class="col s12">
       <div class="card teal">
         <div class="card-content white-text">
-<form method="post" novalidate>
+  <form method="post" novalidate>
     {% csrf_token %}
-    <table>
-      {{ form|materializecss }}
-    </table>
+    {{ form|materializecss }}
     <button type="submit">Save</button>
   </form>
         </div>
       </div>
     </div>
 </div>
+
+<style>
+   /* label color */
+   .input-field label {
+     color: #000;
+   }
+</style>
 
 </body> 

@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Question, SurveyEntry, SurveyEntryForm
+from .models import Employee, Question, SurveyEntry, SurveyEntryForm
 from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
-
+from django import forms
+from django.contrib.auth.models import Permission, User
 
 # Create your views here.
 
@@ -40,3 +41,40 @@ class CompleteView(generic.ListView):
     context_object_name = 'latest_question_list'
     def get_queryset(self):
         return None
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
+class SignUpForm(UserCreationForm):
+    username = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    fNumber = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=200)
+    
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name','last_name', 'fNumber', 'email', 'password1', 'password2', )
+
+
+def signup(request):
+    form = SignUpForm(request.POST)
+    if form.is_valid():
+        user = form.save()
+        user.refresh_from_db()
+        user.employee.fNumber = form.cleaned_data.get('fNumber')
+        user.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('/survey/')
+    else:
+        form = SignUpForm()
+    return render(request, 'stayWellCore/signup.html', {'form': form})
+
+    # else:
+    #     form = UserCreationForm()
+    # return render(request, 'stayWellCore/signup.html', {'form': form})

@@ -1,7 +1,7 @@
-{% comment %} {% load static %}
-<linkrel="stylesheet" type="text/css" href="{% static 'stayWellCore/materialize.css' %}"> {% endcomment %}
+{% load materializecss %}
+
 <head>
-  <title>stayWell</title>
+  <title>stayWell-signup</title>
   
   <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,13 +18,12 @@
 </head>
 
 <body>
+
   <div class="row">
     <div class="col s12">
-      <div class="card teal medium">
+      <div class="card teal small">
         <div class="card-content white-text valign center">
-          <h1><u>stayWell</u></h1>
-          <h3>Development in Progress!</h3>
-          <h3>Brought to you by Exponent EECS</h3>
+          <h1><u>Sign Up</u></h1>
           <div class="card-action">
           <a href="/survey">Survey</a>
           <a href="/signup">Sign Up</a>
@@ -35,14 +34,25 @@
     </div>
   </div>
 
-</body>
+<div class="row">
+    <div class="col s12">
+      <div class="card teal">
+        <div class="card-content white-text">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|materializecss }}
+    <button type="submit">Save</button>
+  </form>
+        </div>
+      </div>
+    </div>
+</div>
 
 <style>
-      .header {
-  padding: 60px;
-  text-align: center;
-  background: #00918d;
-  color: white;
-  font-size: 30px;
-    }
+   /* label color */
+   .input-field label {
+     color: #000;
+   }
 </style>
+
+</body> 
