@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django import forms
 from django.contrib.auth.models import Permission, User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -26,7 +27,8 @@ class HomeView(generic.ListView):
 #     context = {'newSurvey': newSurvey,}
 #     return HttpResponse(template.render(context, request))
 
-class SurveyView(generic.CreateView):
+class SurveyView(LoginRequiredMixin,generic.CreateView):
+    login_url = '/signup/'
     model = SurveyEntry
     form_class = SurveyEntryForm
     template_name = 'stayWellCore/survey.html'
@@ -74,6 +76,10 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'stayWellCore/signup.html', {'form': form})
+
+    def login(request):
+        template = loader.get_template('polls/index.html')
+        return HttpResponse(template.render(request))
 
     # else:
     #     form = UserCreationForm()
