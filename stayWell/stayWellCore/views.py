@@ -77,9 +77,9 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'stayWellCore/signup.html', {'form': form})
 
-    def login(request):
-        template = loader.get_template('polls/index.html')
-        return HttpResponse(template.render(request))
+    # def login(request):
+    #     template = loader.get_template('polls/index.html')
+    #     return HttpResponse(template.render(request))
 
     # else:
     #     form = UserCreationForm()
