@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from .models import *
 # Register your models here.
 admin.site.register(SymptomsChoice)
-admin.site.register(QuestionDropDownField)
 admin.site.register(SurveyEntry)
 admin.site.register(WorkLocationChoice)
 

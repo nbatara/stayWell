@@ -5,5 +5,5 @@ app_name = 'stayWellCore'
 urlpatterns = [
     path('', views.HomeView.as_view(), name='Home'),
     path('survey/', views.SurveyView.as_view(), name='Survey'),
-    path('complete/', views.CompleteView.as_view(), name='Complete')
+    path('survey/complete/', views.CompleteView.as_view(), name='Complete')
 ]

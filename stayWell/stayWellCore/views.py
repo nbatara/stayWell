@@ -29,13 +29,14 @@ class SurveyView(generic.CreateView):
     model = SurveyEntry
     form_class = SurveyEntryForm
     template_name = 'stayWellCore/survey.html'
-    success_url = 'stayWellCore/complete.html'
+    success_url = 'complete/'
     def get(self,request):
         form=self.form_class(None)
         return render(request,self.template_name,{'form':form})
 
+
 class CompleteView(generic.ListView):
-    template_name = 'stayWellCore/index.html'
+    template_name = 'stayWellCore/complete.html'
     context_object_name = 'latest_question_list'
     def get_queryset(self):
-        return Question.objects.order_by('-pub_date')[:5]
+        return None
