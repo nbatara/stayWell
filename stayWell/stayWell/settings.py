@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
+import os, stayWellCore
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +26,10 @@ SECRET_KEY = 'g^$-kh@^vg#k#gv-+la-l@7kgonht-nvzi9u(c4x#o_4!-be0-'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','.us-west-1.elasticbeanstalk.com']
+
+# Added by Developers
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Application definition

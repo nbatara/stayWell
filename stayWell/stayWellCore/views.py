@@ -8,6 +8,7 @@ from django.template import loader
 from django import forms
 from django.contrib.auth.models import Permission, User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -27,7 +28,7 @@ class HomeView(generic.ListView):
 #     context = {'newSurvey': newSurvey,}
 #     return HttpResponse(template.render(context, request))
 
-class SurveyView(LoginRequiredMixin,generic.CreateView):
+class SurveyView(LoginRequiredMixin, generic.CreateView):
     login_url = '/signup/'
     model = SurveyEntry
     form_class = SurveyEntryForm
@@ -38,7 +39,7 @@ class SurveyView(LoginRequiredMixin,generic.CreateView):
         return render(request,self.template_name,{'form':form})
 
 
-class CompleteView(generic.ListView):
+class CompleteView(LoginRequiredMixin, generic.ListView):
     template_name = 'stayWellCore/complete.html'
     context_object_name = 'latest_question_list'
     def get_queryset(self):
@@ -47,18 +48,6 @@ class CompleteView(generic.ListView):
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-
-class SignUpForm(UserCreationForm):
-    username = forms.CharField(max_length=30)
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
-    fNumber = forms.CharField(max_length=30)
-    email = forms.EmailField(max_length=200)
-    
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name','last_name', 'fNumber', 'email', 'password1', 'password2', )
 
 
 def signup(request):
@@ -77,10 +66,14 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'stayWellCore/signup.html', {'form': form})
 
-    # def login(request):
-    #     template = loader.get_template('polls/index.html')
-    #     return HttpResponse(template.render(request))
+class SignUpForm(UserCreationForm):
+    username = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    fNumber = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=200)
 
-    # else:
-    #     form = UserCreationForm()
-    # return render(request, 'stayWellCore/signup.html', {'form': form})
+    class Meta:
+        model = User
+        fields = ('username', 'first_name','last_name', 'fNumber', 'email', 'password1', 'password2', )
+

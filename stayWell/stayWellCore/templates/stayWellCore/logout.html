@@ -1,5 +1,5 @@
-{% comment %} {% load static %}
-<linkrel="stylesheet" type="text/css" href="{% static 'stayWellCore/materialize.css' %}"> {% endcomment %}
+{% comment %} {% extends "base_generic.html" %} {% endcomment %}
+
 <head>
   <title>stayWell</title>
   
@@ -39,12 +39,7 @@
 
 </body>
 
-<style>
-      .header {
-  padding: 60px;
-  text-align: center;
-  background: #00918d;
-  color: white;
-  font-size: 30px;
-    }
-</style>
+{% block content %}
+  <p>Logged out!!</p>  
+  <a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}
