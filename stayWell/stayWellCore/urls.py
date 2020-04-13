@@ -9,6 +9,9 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='Home'),
     path('survey/', views.SurveyView.as_view(), name='Survey'),
     path('survey/complete/', views.CompleteView.as_view(), name='Complete')
+]
 
-    
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
