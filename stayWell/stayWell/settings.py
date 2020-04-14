@@ -28,7 +28,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost','127.0.0.1','.us-west-1.elasticbeanstalk.com']
 
 # Added by Developers
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '39b8c900d28e3e81419729e7b12fb9f9'
+EMAIL_HOST_PASSWORD = '7b9b8b57c5c840d467d8851ebd7764bc'
+DEFAULT_FROM_EMAIL = 'from@staywell-dev.eba-8bbba33k.us-west-1.elasticbeanstalk.com'
+SERVER_EMAIL = 'from@staywell-dev.eba-8bbba33k.us-west-1.elasticbeanstalk.com'
+
 LOGIN_REDIRECT_URL = '/'
 
 
