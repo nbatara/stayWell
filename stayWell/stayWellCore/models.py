@@ -109,7 +109,7 @@ class SurveyEntryForm(forms.ModelForm):
     class Meta:
         model = SurveyEntry
         fields = ['workLocation', 'Temperature', 'Symptoms', 'otherSymptoms']
-        labels = {'workLocation': 'Work Location', 'otherSymptoms': 'Other Symptoms',}
+        labels = {'workLocation': 'Today\'s Work Location', 'otherSymptoms': 'Other Symptoms',}
         # widgets = {
         #     'workLocation': forms.Select,
         # }
