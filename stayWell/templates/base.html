@@ -1,32 +1,74 @@
-{% load static %}
-
-1  <!doctype html>
-2  <html>
-3      <head>
-4          <meta charset="utf-8">
-5          <title>Basic Site Template</title>
-6      </head>
-7  
-8      <body>
-9          <h1>{{ title }}</h1>
-10         <p>{{ cal }}</p>
-11     </body>
-12 </html>
-
-{% comment %} <head>
+{% comment %} {% load static %}
+<linkrel="stylesheet" type="text/css" href="{% static 'stayWellCore/materialize.css' %}"> {% endcomment %}
+<head>
   <title>stayWell</title>
   
   <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       
       <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-</head> {% endcomment %}
 
+</head>
+
+<body>
+
+    <div id="menubar">
+        {% block menubar %}
+            <nav>
+    <div class="nav-wrapper teal">
+      <a href="#!" class="brand-logo center">stayWell</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="left hide-on-med-and-down">
+        <li><a href="/survey">Survey</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="left sidenav" id="mobile-demo">
+      <li><a href="/survey">Survey</a></li>
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+      <li><a href="/signup">Sign Up</a></li>
+  </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+    <!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+    
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+</script>
+
+</body>
+
+<style>
+   /* label color */
+   .input-field label {
+     color: #ffff;
+   }
+</style>
